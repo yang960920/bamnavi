@@ -38,7 +38,7 @@ export default function LoginForm() {
     <div className={styles.wrap}>
       <div className={styles.card}>
         <div className={styles.logoWrap}>
-          <Image src="/images/logo.webp" alt="밤나비 길드" width={180} height={58} priority />
+          <Image src="/images/logo.png" alt="밤나비 길드" width={240} height={240} priority />
         </div>
         <h1 className={styles.title}>로그인</h1>
         <p className={styles.sub}>밤나비 길드원만의 자랑 게시판</p>

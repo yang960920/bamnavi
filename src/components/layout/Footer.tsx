@@ -8,10 +8,10 @@ export default function Footer() {
       <div className={`container ${styles.inner}`}>
         <div className={styles.brand}>
           <Image
-            src="/images/logo.webp"
+            src="/images/logo.png"
             alt="밤나비 길드"
-            width={100}
-            height={32}
+            width={140}
+            height={45}
             className={styles.logo}
           />
           <p className={styles.desc}>

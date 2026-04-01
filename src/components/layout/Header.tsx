@@ -29,10 +29,10 @@ export default function Header() {
         {/* 로고 */}
         <Link href="/" className={styles.logo}>
           <Image
-            src="/images/logo.webp"
+            src="/images/logo.png"
             alt="밤나비 길드"
-            width={48}
-            height={48}
+            width={80}
+            height={80}
             priority
             className={styles.logoImg}
           />
