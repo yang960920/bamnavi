@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ReactionType {
+  JEALOUS   // 기린이네...
+  STOP      // 비틱 멈춰!
+  CONGRATS  // ㅊㅊ / 부러워요
+}
+
+model User {
+  id         String     @id @default(cuid())
+  username   String     @unique
+  password   String
+  nickname   String
+  avatarUrl  String?
+  createdAt  DateTime   @default(now())
+
+  posts      Post[]
+  comments   Comment[]
+  reactions  Reaction[]
+}
+
+model Post {
+  id        String     @id @default(cuid())
+  title     String
+  content   String?
+  imageUrl  String
+  authorId  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  author    User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  tags      Tag[]      @relation("PostToTag")
+  comments  Comment[]
+  reactions Reaction[]
+}
+
+model Tag {
+  id    String @id @default(cuid())
+  name  String @unique
+
+  posts Post[] @relation("PostToTag")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  postId    String
+  authorId  String
+  createdAt DateTime @default(now())
+
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model Reaction {
+  id        String       @id @default(cuid())
+  type      ReactionType
+  postId    String
+  userId    String
+  createdAt DateTime     @default(now())
+
+  post      Post         @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, userId, type])
+}

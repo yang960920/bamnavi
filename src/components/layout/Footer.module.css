@@ -1,0 +1,51 @@
+.footer {
+  border-top: 1px solid var(--surface-border);
+  background: rgba(10, 14, 26, 0.6);
+  backdrop-filter: blur(12px);
+  padding: 48px 0 24px;
+  margin-top: auto;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.logo {
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.3));
+  opacity: 0.8;
+}
+
+.desc {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.links a {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  transition: color var(--transition-fast);
+}
+
+.links a:hover {
+  color: var(--accent-blue);
+}
+
+.copy {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
