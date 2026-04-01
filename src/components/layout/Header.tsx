@@ -31,8 +31,8 @@ export default function Header() {
           <Image
             src="/images/logo.webp"
             alt="밤나비 길드"
-            width={160}
-            height={52}
+            width={48}
+            height={48}
             priority
             className={styles.logoImg}
           />
