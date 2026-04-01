@@ -19,7 +19,8 @@ export default function Header() {
   };
 
   const nav = [
-    { href: '/', label: '자랑 피드' },
+    { href: '/post/new', label: '자랑하기' },
+    { href: '/gallery', label: '갤러리' },
     { href: '/hall-of-fame', label: '명예의 전당' },
   ];
 
@@ -55,25 +56,15 @@ export default function Header() {
         <div className={styles.actions}>
           {isLoggedIn ? (
             <>
-              <Link href="/post/new" className="btn btn-primary btn-sm">
-                + 자랑하기
-              </Link>
-              <Link href="/mypage" className={styles.navLink}>
-                {user?.nickname}
-              </Link>
+              <Link href="/mypage" className={styles.nickname}>{user?.nickname}</Link>
               <button onClick={handleLogout} className="btn btn-ghost btn-sm">
                 로그아웃
               </button>
             </>
           ) : (
-            <>
-              <Link href="/login" className="btn btn-ghost btn-sm">
-                로그인
-              </Link>
-              <Link href="/register" className="btn btn-primary btn-sm">
-                회원가입
-              </Link>
-            </>
+            <Link href="/login" className="btn btn-primary btn-sm">
+              로그인
+            </Link>
           )}
         </div>
       </div>

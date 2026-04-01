@@ -32,15 +32,21 @@ export default function PostDetailClient() {
   }, [id]);
 
   const handleReaction = async (type: ReactionType) => {
-    if (!isLoggedIn) { alert('로그인이 필요합니다.'); return; }
+    if (!isLoggedIn || !user) { alert('로그인이 필요합니다.'); return; }
     const res = await fetch(`/api/posts/${id}/reactions`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type }),
     });
-    if (res.ok) {
-      const data = await fetch(`/api/posts/${id}`).then((r) => r.json());
-      setPost(data.post);
+    if (res.ok && post) {
+      const { action } = await res.json();
+      const reactions = post.reactions ?? [];
+      setPost({
+        ...post,
+        reactions: action === 'removed'
+          ? reactions.filter((r) => !(r.userId === user.id && r.type === type))
+          : [...reactions, { id: crypto.randomUUID(), type, postId: id, userId: user.id, createdAt: new Date().toISOString() }],
+      });
     }
   };
 
@@ -54,10 +60,13 @@ export default function PostDetailClient() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ content: commentText }),
       });
-      if (res.ok) {
+      if (res.ok && post) {
+        const { comment } = await res.json();
         setCommentText('');
-        const data = await fetch(`/api/posts/${id}`).then((r) => r.json());
-        setPost(data.post);
+        setPost({
+          ...post,
+          comments: [...(post.comments ?? []), comment],
+        });
       }
     } finally {
       setSubmitting(false);

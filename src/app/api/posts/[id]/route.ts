@@ -40,19 +40,22 @@ export async function PATCH(
     if (!session) return NextResponse.json({ error: '로그인이 필요합니다.' }, { status: 401 });
 
     const { id } = await params;
-    const post = await prisma.post.findUnique({ where: { id } });
+    const { title, content, imageUrl, tags } = await req.json();
+
+    // findUnique와 tag upsert를 병렬 실행
+    const [post, tagRecords] = await Promise.all([
+      prisma.post.findUnique({ where: { id } }),
+      Promise.all(
+        (tags ?? []).map((t: string) =>
+          prisma.tag.upsert({ where: { name: t }, create: { name: t }, update: {} })
+        )
+      ),
+    ]);
+
     if (!post) return NextResponse.json({ error: '게시글을 찾을 수 없습니다.' }, { status: 404 });
     if (post.authorId !== session.userId) {
       return NextResponse.json({ error: '권한이 없습니다.' }, { status: 403 });
     }
-
-    const { title, content, imageUrl, tags } = await req.json();
-
-    const tagRecords = await Promise.all(
-      (tags ?? []).map((t: string) =>
-        prisma.tag.upsert({ where: { name: t }, create: { name: t }, update: {} })
-      )
-    );
 
     const updated = await prisma.post.update({
       where: { id },

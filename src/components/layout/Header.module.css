@@ -60,6 +60,19 @@
   color: var(--accent-blue);
 }
 
+.nickname {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent-blue);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.nickname:hover {
+  color: var(--accent-purple);
+  text-shadow: 0 0 12px rgba(167, 139, 250, 0.4);
+}
+
 .actions {
   display: flex;
   align-items: center;

@@ -3,6 +3,7 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import StarfieldBackground from '@/components/ui/StarfieldBackground';
+import HeartbeatProvider from '@/components/HeartbeatProvider';
 
 export const metadata: Metadata = {
   title: '밤나비 길드 — 자랑 게시판',
@@ -33,6 +34,7 @@ export default function RootLayout({
             flexDirection: 'column',
           }}
         >
+          <HeartbeatProvider />
           <Header />
           <main style={{ flex: 1 }}>{children}</main>
           <Footer />
